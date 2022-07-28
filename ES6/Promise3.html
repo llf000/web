@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='jquery.js'></script>
+  <script>
+    Promise.all([
+      $.ajax({ url: 'data/1.txt', dataType: 'json' }),
+      $.ajax({ url: 'data/2.txt', dataType: 'json' }),
+      $.ajax({ url: 'data/3.txt', dataType: 'json' })
+    ]).then(arr => {
+      let [r1, r2, r3] = arr;
+      console.log(r1);
+      console.log(r2);
+      console.log(r3);
+    }, err => {
+      console.log('faild')
+    });
+  </script>
+</body>
+
+</html>

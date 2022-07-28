@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // ES6的面向对象
+    // class关键字，构造器和类分开
+    // class里可以直接加方法
+    // 多了class extends super
+    // 以前写：
+    /*
+    function User(name, pwd) {
+      this.name = name;
+      this.pwd = pwd;
+    }
+    User.prototype.login = function () {
+      alert('Login Successful');
+    }
+    let u = new User('hhh', '123456');
+    u.login();
+    */
+    // ES6
+    class User {
+      // 构造函数
+      constructor(name, pwd) {
+        this.name = name;
+        this.pwd = pwd;
+      }
+      login() {
+        console.log('Login successful');
+      }
+    }
+
+    // extends继承
+    class VipUser extends User {
+      constructor(name, pwd, level) {
+        // super 调用父类构造函数
+        super(name, pwd);
+        this.level = level;
+      }
+      download() {
+        this.level > 3 ? console.log('Download Successful') : console.log('Download Faild');
+      }
+    }
+
+    let u = new User('hhh', '123456');
+    u.login();
+
+    let vu = new VipUser('aaa', '123456', '3');
+    vu.login();
+    vu.download();
+
+    console.log(vu.level);
+
+    // vu是User的实例吗
+    console.log(vu instanceof User);
+    console.log(u instanceof VipUser);
+
+  </script>
+
+</body>
+
+</html>

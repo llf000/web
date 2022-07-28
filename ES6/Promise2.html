@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='jquery.js'></script>
+  <script>
+    // 要用服务器打开，直接用浏览器地址失败的
+    // 创建Promise对象
+    // resolve：成功解决   reject：被拒绝了
+    let p1 = new Promise(function (resolve, reject) {
+      $.ajax({
+        url: 'data/1.txt',
+        dataType: 'json',
+        // 成功，把结果给resolve处理
+        success(arr) {
+          resolve(arr);
+        },
+        // 被拒绝，把结果给reject处理
+        error(err) {
+          reject(err);
+        }
+      });
+    });
+
+    let p2 = new Promise(function (resolve, reject) {
+      $.ajax({
+        url: 'data/2.txt',
+        dataType: 'json',
+        success(arr) {
+          resolve(arr);
+        },
+        error(err) {
+          reject(err);
+        }
+      });
+    });
+
+    let p3 = new Promise(function (resolve, reject) {
+      $.ajax({
+        url: 'data/3.txt',
+        dataType: 'json',
+        success(arr) {
+          resolve(arr);
+        },
+        error(err) {
+          reject(err);
+        }
+      });
+    });
+
+    Promise.all([p1, p2, p3]).then(arr => {
+      console.log(`successsfully:${arr}`);
+      let [r1, r2, r3] = arr;
+      console.log(r1);
+      console.log(r2);
+      console.log(r3);
+    }, err => {
+      console.log('faild');
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1.左右两边结构必须一样
+    let [a1, b1, c1] = [1, 2, 3];
+    console.log(a1, b1, c1);
+
+    let [{ a2, b2, c2 }, [num1, num2], num, str] = [{ a2: 1, b2: 3, c2: 5 }, [7, 9], 10, "string"];
+    console.log(a2, b2, c2, num1, num2, num, str);
+    let [json, arr, nums, strs] = [{ a2: 1, b2: 3, c2: 5 }, [7, 9], 10, "string"];
+    console.log(json, arr, nums, strs);
+
+    // 2.右边必须是个东西(数组、JSON、字符串、数字...)
+    // let { a, b } = { 1, 2}; no
+    // 3.声明和赋值不能分开，必须在一句话里完成
+    
+    // let [a, b];
+    // [a, b] = [1, 2];  no
+  </script>
+
+</body>
+
+</html>

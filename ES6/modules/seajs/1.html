@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="sea.js"></script>
+  <script>
+    // 引用的时候.js可省略，默认引用的是js文件
+    seajs.use(['mod1.js', 'mod2.js'], function (mod1, mod2) {
+      mod1.show1(mod1.mod11, mod1.mod12);
+      mod1.show2(mod1.mod11, mod1.mod12);
+      console.log(mod2.res);
+    });
+  </script>
+</body>
+
+</html>

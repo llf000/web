@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='jquery.js'></script>
+  <script>
+    function* show1(a, b) {
+      alert(a);
+      yield;
+      alert(b);
+    }
+    let obj1 = show1(1, 2);
+    obj1.next();
+    obj1.next();
+
+
+    function* show2(a, b) {
+      alert(a);
+      yield 10;
+      alert(b);
+      return 5;
+    }
+    let obj2 = show2(3, 4);
+    let obj21 = obj2.next();
+    console.log(obj21)   // {value: 10, done: false}
+    let obj22 = obj2.next();
+    console.log(obj22);  // {value: 5, done: true}
+
+
+    function* show3(a, b) {
+      alert(a);
+      let c = yield;
+      console.log(c);
+      alert(b);
+      return 5;
+    }
+    let obj3 = show3(3, 4);
+    let obj31 = obj3.next();
+    console.log(obj31)   // {value: undefined, done: false}
+    let obj32 = obj3.next(22);
+    console.log(obj32);  // {value: 5, done: tru
+  </script>
+</body>
+
+</html>

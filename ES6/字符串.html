@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 新方法：startWith  endsWith
+    // startWith 以xxx开始
+    let str1 = "https://www.baidu.com";
+    if (str1.startsWith('https://')) {
+      console.log('这是加密网址');
+    } else {
+      console.log('其他网址');
+    }
+    let str2 = "1.txt";
+    if (str2.endsWith('.txt')) {
+      console.log('这是文本文件');
+    } else {
+      console.log('其他文件');
+    }
+    // endsWith  以xxx结尾
+    // 字符串模板 
+    // 一般写字符串："xxx" or 'xxx' 字符串
+    // 字符串模板：`xxx` 1.可以放变量 `x${变量}xx` 2.可以原样输出(可以换行呀)
+    let str3 = `asdf
+as`;
+    let str4 = `qwer
+    errt`;
+    console.log(str3);
+    console.log(str4);
+
+    let arr = [1, 2, 3];
+    let arr2 = arr.forEach((item, index) => {
+      console.log(`${index}: ${item}`);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+
+    // map 映射    一个对一个 [24, 66, 45, 99] => [不及格, 及格, 不及格, 及格]
+    let arr1 = arr.map(function (item) {
+      return item * 2;
+    });
+    // 写成箭头函数
+    let arr11 = arr.map(item => item * 3);
+    console.log(arr1);
+    console.log(arr11);
+
+    // reduce 汇总  一堆出来一个 [..., ..., ...] => xx
+    // 接收一个函数作为累加器
+    // 求平均数
+    let arr2 = arr.reduce((tmp, item, index) => {
+      if (index < arr.length - 1) {
+        return tmp + item;
+      } else {
+        return (tmp + item) / arr.length;
+      }
+    });
+
+    let arr22 = arr.reduce((tmp, item, index) => {
+      return (tmp + item) / arr.length;
+    });
+    console.log(arr2);
+    // 求和，给一个初始值：10
+    let arr23 = [1, 2, 3].reduce((tmp, item) => tmp + item, 10);
+    console.log(arr23);
+
+    // filter 过滤器
+    let arr3 = arr.filter(item => item % 2);
+    console.log(arr3);
+
+    // forEach 循环/迭代
+    let arr4 = arr.forEach((item, index) => {
+      // console.log("第" + index + "个是" + item);
+      // 字符串模板
+      console.log(`第${index}个是${item}`);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let sum = function (a, b) {
+      return a + b;
+    }
+    alert(sum(1, 2));
+
+    // 箭头函数
+    let sum2 = (c, d) => {
+      return c + d;
+    }
+    alert(sum(1, 3));
+
+    // 箭头函数，只有一个参数 () 可以省略
+    // 箭头函数，只有一条语句，且是return语句 return {} 都可省略
+    let sum3 = e => e * e;
+    alert(sum3(4));
+
+    // 箭头函数应用: 数组排序
+    let arr1 = [3, 5, 11, 66, 99, 66, 54];
+    arr1.sort(function (a, b) {
+      return a - b;
+    })
+    alert(arr1);
+
+    let arr2 = [2, 67, 89, 324, 789, 42];
+    arr2.sort((a, b) => a - b);
+    alert(arr2);
+  </script>
+</body>
+
+</html>
