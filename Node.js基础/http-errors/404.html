@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 500px;
+      margin: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>404 Not Found</h1>
+    <p><span id="err"></span>秒后跳转至<a href="https://www.baidu.com">百度</a></p>
+  </div>
+  <script>
+    window.onload = function () {
+      let t = 5;
+      setInterval(function () {
+        t--;
+        document.getElementById('err').innerHTML = t;
+        if (t == 0) {
+          window.location = 'https://www.baidu.com';
+        }
+      }, 1000);
+    };
+  </script>
+</body>
+
+</html>
