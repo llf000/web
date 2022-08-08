@@ -17,5 +17,5 @@ let server = http.createServer((req, res) => {
 });
 
 // 监听端口
-server.listen(8081);
+server.listen(8080);
 console.log("监听成功");
