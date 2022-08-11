@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      margin-top: 10px;
+      width: 100px;
+      height: 5px;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+
+    .schedule {
+      width: 0;
+      height: 2px;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="file" id="aFile" multiple name="fileUp">
+  <input type="button" value="上传文件" id="btn1">
+  <div class="box">
+    <div class="schedule"></div>
+  </div>
+  <script>
+    window.onload = function () {
+      let oF = document.getElementById('aFile');
+      let oBtn = document.getElementById('btn1');
+      let oDiv = document.querySelector('.box');
+
+      oF.onclick = function () { };
+
+      oBtn.onclick = function () {
+        let xhr = new XMLHttpRequest();
+
+        xhr.upload.onerror = function () {
+          alert('failed,please try again later')
+        };
+
+        xhr.upload.onload = function () {
+          alert('uploaded successfully!')
+        };
+
+        xhr.upload.onprogress = function (ev) {
+          let str = (100 * ev.loaded / ev.total).toFixed(2) + '%';
+          let oSc = document.querySelector('.schedule');
+          oSc.style.width = str;
+        };
+
+        xhr.open('POST', '/upload', true);
+
+        let formData = new FormData();
+        Array.from(oF.files).forEach(file => {
+          formData.append('files', file);
+        });
+
+        xhr.send(formData);
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            alert(xhr.status);
+          }
+        };
+      };
+    };
+  </script>
+</body>
+
+</html>

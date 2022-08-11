@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="file" id="aFile" multiple name="fileUp">
+  <input type="button" value="上传文件" id="btn1">
+
+  <script>
+    window.onload = function () {
+      let oF = document.getElementById('aFile');
+      let oBtn = document.getElementById('btn1');
+
+      oBtn.onclick = function () {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/upload', true);
+
+        let formData = new FormData();
+        console.log(Array.from(oF.files));
+        Array.from(oF.files).forEach(file => {
+          formData.append('files', file);
+        });
+
+
+        xhr.send(formData);
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            alert(xhr.status);
+          }
+        };
+      };
+    };
+  </script>
+</body>
+
+</html>

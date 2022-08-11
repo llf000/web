@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button type="submit" id="btn">button</button>
+  <script>
+    window.onload = function () {
+      let oBtn = document.getElementById('btn');
+      oBtn.onclick = function () {
+        // 1.创建XHR对象
+        let xhr = new XMLHttpRequest();
+        console.log(xhr.readyState);
+
+        // 2.创建连接
+        xhr.open('Get', 'data/2.txt', true);
+        console.log(xhr.readyState);
+
+        // 3.发送请求
+        xhr.send();
+
+        // 4.接收
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            if (
+              (xhr.status >= 200 && xhr.status < 300) ||
+              xhr.status == 304
+            ) {
+              alert('成功');
+
+              let arr = eval('(' + xhr.responseText + ')');
+              alert(arr);
+              console.log(arr);
+            } else {
+              alert('失败');
+            }
+          }
+        };
+      };
+    };
+  </script>
+</body>
+
+</html>
