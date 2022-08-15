@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+    }
+
+    .a {
+
+      background: #ff00ff;
+      left: 0;
+      top: 0;
+    }
+
+    .b {
+      background: #ffff00;
+      left: 120px;
+      top: 0;
+    }
+
+    .c {
+      background: #00ff00;
+      left: 60px;
+      top: 110px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box a">touch`</div>
+  <div class="box b">touch2</div>
+  <div class="box c">touch3</div>
+  <script>
+    // 多点触摸拖动实现：
+    // 需要监听三个事件：touchstart、touchmove、touchend
+    // 当touch事件被触发时，记录下触摸点相对于box的初始位置（一个touch中，这个距离是不会改变的）
+    // 开始拖动时，盒子也要跟着touch点移动，盒子的移动距离：触摸点当前距离html左边沿距离减去触摸点起始距离
+    // 拖动事件结束时，清除掉touchmove和touchend
+    // 注意点：
+    // 因为最后要清除touchmove和touchend，可以在开始时将其回调函数拿出单独写，以便后续清除
+    // 在移动函数和结束函数前加上preventDefault
+    // 多点拖动，targetTouches.length必定大于1
+    window.onload = function () {
+      let oBox = document.getElementsByClassName('box');
+
+      Array.from(oBox).forEach(box => {
+        drag(box);
+      });
+
+      function drag(obj) {
+        obj.addEventListener('touchstart', function (ev) {
+          // targetTouches：一个只读的TouchList列表，包含仍与触摸面接触的所有触摸点的Touch对象
+          // touchstart事件触发在哪个element内，它就是当前目标元素
+          // pageX：触点相对于HTML文档左边沿的的 X 坐标
+          // offsetLeft：一个只读属性，返回当前元素（box）左上角相对于HTMLElement.offsetParent节点（html）的左边界偏移的像素值
+          let id = ev.targetTouches[0].identifier;
+          let disX = ev.targetTouches[0].pageX - obj.offsetLeft;
+          let disY = ev.targetTouches[0].pageY - obj.offsetTop;
+          // console.log(disX)
+          ev.preventDefault();
+
+          function fnMove(ev) {
+            obj.style.left = ev.targetTouches[0].pageX - disX + 'px';
+            obj.style.top = ev.targetTouches[0].pageY - disY + 'px';
+          }
+          ev.preventDefault();
+
+          function fnEnd(ev) {
+            let found = false;
+            Array.from(ev.changeTouches).forEach(touch => {
+              if (touch.identifier == id) {
+                found = true;
+              }
+            });
+            if (found) {
+              obj.removeEventListener('touchmove', fnMove, false);
+              obj.removeEventListener('touchend', fnEnd, false);
+            }
+          }
+
+          obj.addEventListener('touchmove', fnMove, false);
+
+          obj.addEventListener('touchend', fnEnd, false);
+        }, false);
+      }
+    };
+  </script>
+</body>
+
+</html>

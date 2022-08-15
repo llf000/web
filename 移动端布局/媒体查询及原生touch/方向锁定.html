@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    html {
+      font-size: 20px;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .wrap {
+      background: #CCC;
+    }
+
+    .content {
+      background: #fff;
+      transform: translateY(0px);
+      position: relative;
+      z-index: 2;
+      top: -30px
+    }
+
+    .load_more {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      line-height: 30px;
+    }
+
+    .banner {
+      width: 25rem;
+      height: 7.8rem;
+      overflow: hidden;
+    }
+
+    .banner ul {
+      width: 9999rem;
+      transform: translateX(0px);
+    }
+
+    .banner li {
+      width: 25rem;
+      height: 7.8rem;
+      float: left;
+      line-height: 7.8rem;
+      text-align: center;
+    }
+
+    .one {
+      background-color: #3b5998;
+    }
+
+    .two {
+      background-color: #1da1f1;
+    }
+
+    .three {
+      background-color: #db4e41;
+    }
+
+    .four {
+      background-color: #6383a8;
+    }
+
+    .five {
+      background-color: #fe6550;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="load_more">下拉刷新</div>
+    <div class="content">
+      <div class="banner">
+        <ul>
+          <li class="one">one</li>
+          <li class="two">two</li>
+          <li class="three">three</li>
+          <li class="four">four</li>
+          <li class="five">five</li>
+        </ul>
+      </div>
+      <ol class="ol1"></ol>
+    </div>
+  </div>
+
+  <script src="jquery.js"></script>
+  <script>
+    // 方向锁定实现：
+    // 例如在一个touch事件中左右滑动banner图时，就不能上下滑动页面内容，反之亦然
+    // 先判断方向是否锁定（x在变还是y在变）
+    // 若x方向，处理banner
+    // 若y方向，处理页面
+    window.onload = function () {
+      document.documentElement.style.fontSize = document.documentElement.clientWidth * 20 / 500 + 'px';
+
+      let banner = document.querySelector('.banner');
+      let content = document.querySelector('.content');
+      let load_more = document.querySelector('.load_more');
+
+      let banner_ul = document.querySelector('ul');
+      let banner_left = 0;
+      let content_top = 0;
+
+
+      function loadData(fn) {
+        $.ajax({
+          url: 'data.txt?=' + Math.random(),
+          success(str) {
+            let arr = str.split('\n');
+
+            $('ol').html('');
+            arr.forEach(s => {
+              $(`<li>${s}</li>`).appendTo('ol');
+            });
+
+            fn && fn();
+          },
+          error() {
+            alert('加载失败');
+          }
+        });
+      }
+
+      loadData();
+
+      banner.addEventListener('touchstart', function (ev) {
+        banner_ul.style.transition = '';
+        content.style.transition = '';
+
+        let startX = ev.targetTouches[0].clientX;
+        let startY = ev.targetTouches[0].clientY;
+
+        let dir = '';
+
+        let disX = startX - banner_left;
+        let disY = startY - content_top;
+
+        function fnMove(ev) {
+          let x = ev.targetTouches[0].clientX;
+          let y = ev.targetTouches[0].clientY;
+
+          if (!dir) {
+            if (Math.abs(x - startX) >= 5) {
+              dir = 'x';
+            } else if (Math.abs(y - startY) >= 5) {
+              dir = 'y';
+            }
+          } else {
+            if (dir == 'x') {
+              banner_left = x - disX;
+              banner_ul.style.transform = `translateX(${banner_left}px)`;
+            } else {
+              content_top = y - disY;
+
+              if (content_top > 0) {
+                content.style.transform = `translateY(${content_top / 3}px)`;
+
+                if (content_top >= 200) {
+                  load_more.innerHTML = '松开加载';
+                } else {
+                  load_more.innerHTML = '下拉刷新';
+                }
+              } else {
+                content.style.transform = `translateY(${content_top}px)`;
+              }
+            }
+          }
+        }
+        function fnEnd() {
+          banner.removeEventListener('touchmove', fnMove, false)
+          banner.removeEventListener('touchend', fnEnd, false)
+
+          if (dir == 'x') {
+            let n = Math.round(-banner_left / banner.offsetWidth);
+            if (n < 0) {
+              n = 0;
+            } else if (n >= banner_ul.children.length) {
+              n = banner_ul.children.length - 1;
+            }
+
+            banner_left = -n * banner.offsetWidth;
+
+            banner_ul.style.transition = '0.7s all ease';
+            banner_ul.style.transform = `translateX(${banner_left}px)`;
+          } else if (dir == 'y') {
+            if (content_top >= 200) {     //加载新数据
+              content_top = 30;
+
+              load_more.innerHTML = '正在加载...';
+
+              loadData(function () {
+                load_more.innerHTML = '下拉刷新';
+
+                content_top = 0;
+                content.style.transition = '0.6s all ease';
+                content.style.transform = `translateY(${content_top}px)`;
+              });
+            } else {
+              content_top = 0;
+            }
+            content.style.transition = '0.6s all ease';
+            content.style.transform = `translateY(${content_top}px)`;
+          }
+        }
+
+        banner.addEventListener('touchmove', fnMove, false)
+        banner.addEventListener('touchend', fnEnd, false)
+      }, false)
+
+
+    };
+  </script>
+</body>
+
+</html>

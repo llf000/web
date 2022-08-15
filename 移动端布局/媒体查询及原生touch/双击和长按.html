@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #ff00ff;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">touch</div>
+  <script>
+    // 双击和长按实现：
+    // 需要监听三个事件：touchstart、touchmove、touchend
+    // 双击：两次单击之间的时间小于某个值（比如300毫秒）
+    // 长按：touchstart和touchend之间的时间大于某个值（比如700毫秒）
+
+    window.onload = function () {
+      let oBox = document.querySelector('.box');
+
+      let timer = 0;
+      let lastTap = 0;
+      // Date.now()返回当前时间
+      oBox.addEventListener('touchstart', () => {
+        timer = Date.now();
+      }, false);
+
+      oBox.addEventListener('touchend', () => {
+        if (Date.now() - timer <= 700) {
+          console.log('单击');
+
+          if (Date.now() - lastTap <= 300) {
+            console.log('双击');
+          }
+
+          lastTap = Date.now();
+        } else {
+          console.log('长按');
+        }
+      }, false);
+    };
+  </script>
+</body>
+
+</html>

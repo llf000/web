@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 200px;
+      margin: 0 auto
+    }
+
+    .wrap {
+      width: 200px;
+      height: 200px;
+      background: #ccc;
+      overflow: hidden;
+    }
+
+    .content {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <input type="button" class="btn1" value="button1">
+    <input type="button" class="btn2" value="button2">
+    <input type="button" class="btn3" value="button3">
+
+    <div class="wrap">
+      <div class="content"></div>
+    </div>
+  </div>
+  <script src='iscroll.js'></script>
+  <script>
+    window.onload = function () {
+      let content = document.querySelector('.content');
+      let oBtn1 = document.querySelector('.btn1');
+      let oBtn2 = document.querySelector('.btn2');
+      let oBtn3 = document.querySelector('.btn3');
+      let iscroll = new IScroll('.wrap', { bounce: true, bounceTime: 600 });
+
+      oBtn1.onclick = () => {
+        iscroll.scrollTo(0, 50);
+        content.innerHTML = 'iscroll.scrollTo(0,50)';
+      };
+
+      oBtn2.onclick = () => {
+        iscroll.y = '30';
+        content.innerHTML = '不会有变化，<br>iscroll.y是只读属性，<br>不可赋值';
+      };
+
+      oBtn3.onclick = () => {
+        scrollTo.y = 30;
+        content.innerHTML = '不会有变化，<br>scrollTo不可赋值';
+      };
+
+    };
+
+  </script>
+</body>
+
+</html>

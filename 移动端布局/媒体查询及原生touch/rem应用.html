@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    html {
+      font-size: 20px;
+    }
+
+    .header {
+      width: 18.75rem;
+      height: 5.8575rem;
+    }
+
+    .header img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="img/header.png" alt="header-img">
+  </div>
+  <script>
+    console.log(document.documentElement.clientWidth);
+    window.onload = function () {
+      // document.documentElement：获取html元素
+      // 20 * document.documentElement.clientWidth / 375：20rem是以375px为基准算的
+      document.documentElement.style.fontSize = 20 * document.documentElement.clientWidth / 375 + 'px';
+    };
+  </script>
+</body>
+
+</html>

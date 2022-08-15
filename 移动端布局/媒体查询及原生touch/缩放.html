@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      text-align: center;
+      line-height: 200px;
+      margin: 100px auto 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">scale</div>
+  <script>
+    // 缩放实现：
+    // 缩放需要至少两根手指来操作,ev.targetTouches.length>1
+    // 在开始时，记录两个触点之间的距离（知道各自的坐标，等于是三角函数求斜边）
+    // 缩放时，盒子也是要跟着缩放的，缩放后的大小计算：dis1/w1 = dis2/w2
+    // 注意：要处理页面默认事件操作ev.preventDefault();
+    // 计算完设置的时候不要忘记加px
+    window.onload = function () {
+      let oBox = document.querySelector('.box');
+
+      oBox.addEventListener('touchstart', function (ev) {
+        if (ev.targetTouches.length > 1) {
+          let dis1 = Math.sqrt(Math.pow(ev.targetTouches[0].clientX - ev.targetTouches[1].clientX, 2) + Math.pow(ev.targetTouches[0].clientY - ev.targetTouches[1].clientY, 2));
+          let w1 = oBox.offestWidth, h1 = oBox.offfsetHeight;
+
+          ev.preventDefault();
+
+          function fnMove(ev) {
+            if (ev.targetTouches.length > 1) {
+              let dis2 = Math.sqrt(Math.pow(ev.targetTouches[0].clientX - ev.targetTouches[1].clientX, 2) + Math.pow(ev.targetTouches[0].clientY - ev.targetTouches[1].clientY, 2));
+              let w2 = oBox.offestWidth, h2 = oBox.offfsetHeight;
+
+              oBox.style.width = dis2 * w1 / dis1 + 'px';
+              oBox.style.height = dis2 * h1 / dis1 + 'px';
+            }
+            ev.preventDefault();
+          }
+          function fnEnd() {
+            oBox.removeEventListener('touchmove', fnMove, false);
+            oBox.removeEventListener('touchend', fnEnd, false);
+          }
+
+          oBox.addEventListener('touchmove', fnMove, false);
+
+          oBox.addEventListener('touchend', fnEnd, false);
+        }
+
+      }, false);
+    };
+  </script>
+</body>
+
+</html>

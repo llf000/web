@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    html {
+      font-size: 20px;
+    }
+
+    /* body {
+      overflow: hidden;
+    } */
+
+    .wrap {
+      background: #CCC;
+    }
+
+    .content {
+      background: #fff;
+      transform: translateY(0px);
+    }
+
+    .banner {
+      width: 25rem;
+      height: 7.8rem;
+      overflow: hidden;
+    }
+
+    .banner ul {
+      width: 9999rem;
+      transform: translateX(0px);
+    }
+
+    .banner li {
+      width: 25rem;
+      height: 7.8rem;
+      float: left;
+      line-height: 7.8rem;
+      text-align: center;
+    }
+
+    .one {
+      background-color: #3b5998;
+    }
+
+    .two {
+      background-color: #1da1f1;
+    }
+
+    .three {
+      background-color: #db4e41;
+    }
+
+    .four {
+      background-color: #6383a8;
+    }
+
+    .five {
+      background-color: #fe6550;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="content">
+      <div class="banner">
+        <ul>
+          <li class="one">one</li>
+          <li class="two">two</li>
+          <li class="three">three</li>
+          <li class="four">four</li>
+          <li class="five">five</li>
+        </ul>
+      </div>
+      <ul>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+        <li>撑起页面</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      document.documentElement.style.fontSize = document.documentElement.clientWidth * 20 / 500 + 'px';
+
+      let banner = document.querySelector('.banner');
+      let content = document.querySelector('.content');
+
+      let banner_ul = document.querySelector('ul');
+      let banner_left = 0;
+      let content_top = 0;
+
+      banner.addEventListener('touchstart', function (ev) {
+        let startX = ev.targetTouches[0].clientX;
+        let startY = ev.targetTouches[0].clientY;
+
+        let disX = startX - banner_left;
+        let disY = startY - content_top;
+
+        function fnMove(ev) {
+          banner_left = ev.targetTouches[0].clientX - disX;
+          banner_ul.style.transform = `translateX(${banner_left}px)`;
+
+          content_top = ev.targetTouches[0].clientY - disY;
+          content.style.transform = `translateY(${content_top}px)`;
+        }
+        function fnEnd() {
+          banner.removeEventListener('touchmove', fnMove, false);
+          banner.removeEventListener('touchend', fnEnd, false);
+        }
+
+        banner.addEventListener('touchmove', fnMove, false);
+        banner.addEventListener('touchend', fnEnd, false);
+      }, false);
+    }
+  </script>
+</body>
+
+</html>

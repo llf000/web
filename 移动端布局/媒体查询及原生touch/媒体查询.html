@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <!-- 通过介质区分是屏幕还是打印机 -->
+  <!-- <style media="screen"> -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      background-color: blueviolet;
+      height: 20px;
+    }
+
+    /* css里定义的东西都是@开头，@media相当于css中的if */
+    @media screen and (max-width:600px) {
+      div {
+        background-color: green;
+      }
+    }
+
+    @media screen and (max-width:300px) {
+      div {
+        background-color: blue;
+      }
+    }
+
+    /* 如果在<style>头里直接定义了使用的是屏幕,那么打印是背景色变黄就不会生效 */
+    @media print {
+      div {
+        background-color: red;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div>hhh</div>
+</body>
+
+</html>

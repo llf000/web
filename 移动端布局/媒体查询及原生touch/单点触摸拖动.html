@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #ff00ff;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">touch</div>
+  <script>
+    // 单点触摸拖动实现：
+    // 需要监听三个事件：touchstart、touchmove、touchend
+    // 当touch事件被触发时，记录下触摸点相对于box的初始位置（一个touch中，这个距离是不会改变的）
+    // 开始拖动时，盒子也要跟着touch点移动，盒子的移动距离：触摸点当前距离html左边沿距离减去触摸点起始距离
+    // 拖动事件结束时，清除掉touchmove和touchend
+    // 注意点：
+    // 因为最后要清除touchmove和touchend，可以在开始时将其回调函数拿出单独写，以便后续清除
+    // 在移动函数和结束函数前加上preventDefault
+    window.onload = function () {
+      let oBox = document.querySelector('.box');
+
+      oBox.addEventListener('touchstart', function (ev) {
+        // targetTouches：一个只读的TouchList列表，包含仍与触摸面接触的所有触摸点的Touch对象
+        // touchstart事件触发在哪个element内，它就是当前目标元素
+        // pageX：触点相对于HTML文档左边沿的的 X 坐标
+        // offsetLeft：一个只读属性，返回当前元素（box）左上角相对于HTMLElement.offsetParent节点（html）的左边界偏移的像素值
+        let disX = ev.targetTouches[0].pageX - oBox.offsetLeft;
+        let disY = ev.targetTouches[0].pageY - oBox.offsetTop;
+        // console.log(disX)
+        ev.preventDefault();
+
+        function fnMove(ev) {
+          oBox.style.left = ev.targetTouches[0].pageX - disX + 'px';
+          oBox.style.top = ev.targetTouches[0].pageY - disY + 'px';
+        }
+        ev.preventDefault();
+
+        function fnEnd() {
+          oBox.removeEventListener('touchmove', fnMove, false);
+          oBox.removeEventListener('touchend', fnEnd, false);
+        }
+
+        oBox.addEventListener('touchmove', fnMove, false);
+
+        oBox.addEventListener('touchend', fnEnd, false);
+      }, false);
+
+    };
+  </script>
+</body>
+
+</html>

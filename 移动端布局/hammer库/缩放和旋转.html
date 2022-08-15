@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .boxcontent {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-gap: 20px;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      line-height: 200px;
+      font-size: 30px;
+      background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="boxcontent">
+    <div class="box box1">缩放</div>
+    <div class="box box2">旋转</div>
+  </div>
+  <script src='hammer.js'></script>
+  <script>
+    // 用函数把获取元素的语句封起来，更方便
+    function $(...args) {
+      return document.querySelectorAll(...args);
+    }
+    window.onload = function () {
+      let oBox1 = $('.box')[0];
+      let oBox2 = $('.box')[1];
+      // 缩放和旋转自带阻止原生事件功能
+      // 缩放
+      let hammer1 = new Hammer(oBox1);
+
+      let obj1 = hammer1.get('pinch');
+
+      obj1.set({ enable: true });
+
+      hammer1.on('pinchstart', ev => { });
+      hammer1.on('pinchmove', ev => {
+        oBox1.style.transform = `scale(${ev.scale})`;
+      });
+      hammer1.on('pinchend', ev => { });
+
+      // 旋转
+      let hammer2 = new Hammer(oBox2);
+
+      hammer2.get('rotate').set({ enable: true });
+
+      hammer2.on('rotatestart', ev => { });
+      hammer2.on('rotatemove', ev => {
+        oBox2.style.transform = `rotate(${ev.rotation}deg)`;
+      });
+      hammer2.on('rotateend', ev => { });
+
+    };
+
+  </script>
+</body>
+
+</html>

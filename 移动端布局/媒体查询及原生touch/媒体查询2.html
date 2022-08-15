@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .aside {
+      height: 250px;
+      position: fixed;
+      top: 50%;
+      left: 0;
+      margin-top: -125px;
+    }
+
+    .aside li {
+      height: 50px;
+      width: 100px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      transition: 0.3s all ease;
+    }
+
+    .aside li:hover {
+      width: 150px;
+    }
+
+    .one {
+      background-color: #3b5998;
+    }
+
+    .two {
+      background-color: #1da1f1;
+    }
+
+    .three {
+      background-color: #db4e41;
+    }
+
+    .four {
+      background-color: #6383a8;
+    }
+
+    .five {
+      background-color: #fe6550;
+    }
+
+    @media (max-width:1000px) {
+      .aside {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        margin-top: 0;
+        top: auto;
+        bottom: 0;
+      }
+
+      .aside li {
+        flex: 1;
+        width: auto;
+      }
+
+      .aside li:hover {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside>
+    <ul class="aside">
+      <li class="one">one</li>
+      <li class="two">two</li>
+      <li class="three">three</li>
+      <li class="four">four</li>
+      <li class="five">five</li>
+    </ul>
+  </aside>
+
+</body>
+
+</html>

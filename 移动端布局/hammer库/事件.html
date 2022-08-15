@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">点击<br>长按<br>拖拽<br>滑动</div>
+
+  <script src='hammer.js'></script>
+  <script>
+    window.onload = function () {
+      let oBox = document.querySelector('.box');
+
+      let hammer = new Hammer(oBox, {});
+      hammer.on('tap', () => {
+        oBox.innerHTML = 'tap 点击';
+        console.log('点击');
+      });
+
+      hammer.on('press', () => {
+        oBox.innerHTML = 'press 长按';
+        console.log('长按');
+      });
+
+      hammer.on('swipe', () => {
+        oBox.innerHTML = 'swipe 滑动';
+        console.log('滑动');
+      });
+
+      hammer.on('pan', () => {
+        oBox.innerHTML = 'pan 拖拽';
+        console.log('拖拽');
+      });
+    };
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap {
+      width: 200px;
+      height: 200px;
+      background: #ccc;
+      overflow: hidden;
+      margin: 50px auto;
+    }
+
+    .content {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="content"></div>
+  </div>
+
+  <script src='myscroll.js'></script>
+  <script>
+    window.onload = function () {
+      let content = document.querySelector('.content');
+      let iscroll = new MyScroll('.wrap', { bounce: true, bounceTime: 600 });
+
+      content.innerHTML = '';
+      iscroll.on('beforeScrollStart', () => {
+        content.innerHTML = 'beforeScrollStart滚动开始前';
+        console.log('beforeScrollStart');
+      });
+
+      iscroll.on('scrollStart', () => {
+        content.innerHTML = 'scrollStart--滚动开始';
+        console.log('scrollStart');
+      });
+
+      iscroll.on('scroll', () => {
+        content.innerHTML = 'scroll--正在滚动';
+        console.log('scroll');
+      });
+
+      iscroll.on('scrollEnd', () => {
+        content.innerHTML = 'scrollEnd--滚动结束';
+        console.log('scrollEnd');
+      });
+
+      iscroll.on('scrollCancel', () => {
+        content.innerHTML = 'scrollCancel--滚动取消';
+        console.log('scrollCancel');
+      });
+    };
+
+  </script>
+</body>
+
+</html>

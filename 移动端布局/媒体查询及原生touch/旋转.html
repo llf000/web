@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0 initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      text-align: center;
+      line-height: 200px;
+      margin: 100px auto 0;
+      transform: rotate(0deg)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">touch</div>
+  <script>
+    // 旋转实现：
+    // 旋转需要至少两根手指来操作,ev.targetTouches.length>1
+    // 在开始时，记录两个触点之间与html左沿之间的角度
+    // 旋转时，盒子也是要跟着旋转的，旋转的角度就是当前两个触点之间与html左沿之间的角度减去最开始的
+    window.onload = function () {
+      let oBox = document.querySelector('.box');
+      // 起始角度就是transform的角度，为什么不直接把transform角度存起来，而要跟着起始页面是值得的走呢？
+      // 因为同样效果的transform，可以有不同的实现过程，故而无法最开始在页面中不设置就存起来
+      let initialAng = 0;
+      oBox.addEventListener('touchstart', function (ev) {
+        if (ev.targetTouches.length > 1) {
+          let a = ev.targetTouches[0].clientX - ev.targetTouches[1].clientX;
+          let b = ev.targetTouches[0].clientY - ev.targetTouches[1].clientY;
+
+          let ang = Math.atan2(b, a) * 180 / Math.PI;
+
+          let startAng = initialAng;
+          ev.preventDefault();
+
+          function fnMove(ev) {
+            if (ev.targetTouches.length > 1) {
+              let a = ev.targetTouches[0].clientX - ev.targetTouches[1].clientX;
+              let b = ev.targetTouches[0].clientY - ev.targetTouches[1].clientY;
+
+              let ang2 = Math.atan2(b, a) * 180 / Math.PI;
+              initialAng = startAng + ang2 - ang;
+              oBox.style.transform = `rotate(${initialAng}deg`;
+            }
+            ev.preventDefault();
+          }
+          function fnEnd() {
+            oBox.removeEventListener('touchmove', fnMove, false);
+            oBox.removeEventListener('touchend', fnEnd, false);
+          }
+
+          oBox.addEventListener('touchmove', fnMove, false);
+
+          oBox.addEventListener('touchend', fnEnd, false);
+        }
+
+      }, false);
+    };
+  </script>
+</body>
+
+</html>
