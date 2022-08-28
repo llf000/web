@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="button" value="画线" id="btn"><br>
+
+  <script>
+    window.onload = function () {
+      let oBtn = document.querySelector('#btn');
+
+      oBtn.onclick = function () {
+        let oSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        let sLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
+        oSvg.setAttribute('width', '600');
+        oSvg.setAttribute('height', '400');
+        oSvg.style.background = 'pink';
+
+        sLine.setAttribute('x1', 100);
+        sLine.setAttribute('y1', 100);
+        sLine.setAttribute('x2', 400);
+        sLine.setAttribute('y2', 100);
+        sLine.style.stroke = 'purple';
+        sLine.style.strokeWidth = '5';
+
+        document.body.appendChild(oSvg);
+        oSvg.appendChild(sLine);
+
+
+      };
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .box {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: white;
+
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">
+    <canvas width="600" height="400">
+      您的浏览器不支持canvas，请下载新版浏览器
+    </canvas>
+  </div>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      // ctx.arc(x, y, r, startAng, endArg, 是否逆时针)
+      // 圆
+      ctx.arc(50, 50, 50, 0 * Math.PI / 180, 360 * Math.PI / 180, true);
+      ctx.stroke();
+
+      // 弧：左上角四分之一圆
+      ctx.beginPath();
+      ctx.arc(200, 50, 50, 1 * Math.PI, 1.5 * Math.PI, false);
+      ctx.stroke();
+
+      // 扇形：右上角八分之一
+      // 如果要填充一个未完成（也就是没有首尾相接）的路径，浏览器将在起、止点件绘制一条直线，然后直接填充
+      ctx.beginPath();
+      ctx.arc(350, 50, 50, 1.75 * Math.PI, 2 * Math.PI, false);
+      ctx.lineTo(350, 50);
+      ctx.fill();
+    }
+  </script>
+</body>
+
+</html>

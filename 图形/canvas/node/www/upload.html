@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .box {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: white;
+
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">
+    <input type="color" id="color">
+    <input type="button" id="upload" value="upload">
+    <canvas width="600" height="400">
+      您的浏览器不支持canvas，请下载新版浏览器
+    </canvas>
+  </div>
+
+
+  <script>
+    window.onload = function () {
+      // 获取元素
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+      let oColor = document.getElementById('color');
+      let oBtn = document.getElementById('upload');
+
+      // 给一个起始颜色black，当颜色改变时，画笔颜色变成选择的颜色
+      let color = 'black';
+      oColor.onchange = function () {
+        color = this.value;
+      }
+
+      //  定义起点坐标
+      let moveX, moveY;
+      // 鼠标按下(onmousedown)时，调用回调函数，起点坐标等于移动的坐标
+      oC.onmousedown = function (draw) {
+        moveX = draw.offsetX;
+        moveY = draw.offsetY;
+
+        // 鼠标移动时(onmousemove)，调用回调函数，绘制路径
+        oC.onmousemove = function (draw) {
+          ctx.moveTo(moveX, moveY);
+          ctx.lineTo(draw.offsetX, draw.offsetY);
+
+          moveX = draw.offsetX;
+          moveY = draw.offsetY;
+
+          ctx.strokeStyle = color;
+          ctx.stroke();
+        };
+
+        // 鼠标松开时(onmouseup)
+        oC.onmouseup = function () {
+          oC.onmousemove = null;
+          oC.onmouseup = null
+        };
+      };
+      // 上传
+      oBtn.onclick = function () {
+        // 图片转成base64字符串
+        let str = oC.toDataURL();
+        // 发给服务器
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('post', '/upload_base64', true);
+        // encodeYUIComponent():可把字符串作为URI 组件进行编码。其返回值URIstring 的副本，其中的某些字符将被十六进制的转义序列进行替换
+        // 防止出现不合时宜的东西
+        xhr.send(encodeURIComponent(str));
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            console.log(xhr.status);
+            alert(xhr.status);
+          }
+        };
+      };
+    };
+  </script>
+</body>
+
+</html>

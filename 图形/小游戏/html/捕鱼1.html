@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>捕鱼达人</title>
+  <link rel="stylesheet" href="../css/index.css" type="text/css">
+</head>
+
+<body>
+  <canvas class="canvas1" width="800" height="600"></canvas>
+
+  <script src="../js/common.js"></script>
+  <script>
+    // 先把鱼、炮、炮台画出来
+    window.onload = function () {
+      let oC = document.querySelector('.canvas1');
+      let ctx = oC.getContext('2d');
+
+      loadImgs({
+        fish1: '../img/fish1.png',
+        cannon1: '../img/cannon1.png',
+        bottom: '../img/bottom.png'
+      }, function (imgs) {
+        // alert('load successfully');
+        // console.log(_imgs);
+
+        let w = 55, h = 37, x = 200, y = 150;
+
+        ctx.save();
+        ctx.translate(x + w / 2, y + h / 2);
+        ctx.rotate(d2a(30));
+        ctx.drawImage(
+          _imgs.fish1,
+          0, 0, w, h,
+          -w / 2, -h / 2, w, h
+        );
+        ctx.restore();
+
+        ctx.drawImage(
+          _imgs.bottom,
+          0, 0, 756, 71,
+          20, 526, 756, 71
+        )
+
+        ctx.drawImage(
+          _imgs.cannon1,
+          0, 0, 74, 74,
+          420, 534, 74, 74
+        );
+      });
+
+    };
+  </script>
+</body>
+
+</html>

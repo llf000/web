@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+
+  <script src="jQuery.js"></script>
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+      let oChart2 = document.querySelector('.chart2');
+
+      // 初始化echarts实例
+      let myChart = echarts.init(oChart);
+      // 指定图表的配置项和数据
+      myChart.setOption({
+        title: {
+          text: '异步数据加载示例'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'cross' }
+        },
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          data: []
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: []
+          }
+        ]
+      });
+
+      // 异步加载数据
+      $.get('data.json').done(function (data) {
+        // 填入数据
+        myChart.setOption({
+          xAxis: {
+            data: data.categories
+          },
+          series: [
+            {
+              // 根据名字对应到相应的系列
+              name: '销量',
+              data: data.data
+            }
+          ]
+        });
+      });
+    };
+
+  </script>
+</body>
+
+</html>

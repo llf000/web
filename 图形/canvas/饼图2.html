@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .box {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: white;
+
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">
+    <canvas width="600" height="400">
+      您的浏览器不支持canvas，请下载新版浏览器
+    </canvas>
+  </div>
+
+  <script>
+    /*
+    给定数据：
+        类别： 苹果   香蕉   葡萄   荔枝
+        数量： 100    200    300   400
+    */
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      // 有数据，先算出总量，在计算每个数据百分比占比，用百分比占比计算角度占比，推算起始角、终止角
+      // 开始画：下一个的起始角就是上个的终止角
+
+      function pie(startAng, endAng, color) {
+        let x = 300;
+        let y = 150;
+        let cr = 100;
+        ctx.arc(x, y, cr, startAng, endAng, false);
+        ctx.fillStyle = color;
+        ctx.lineTo(x, y);
+        ctx.stroke;
+
+      }
+
+      // 数据
+      let data = [100, 200, 300, 400];
+      let colors = ['#544', '#522', '#744', '#722'];
+
+      // 总量
+      let sum = data.reduce((tmp, item, index) => tmp + item);
+
+      // 数据百分比占比--角度占比
+      let angs = data.map((item) => (360 * item / sum) / 180 * Math.PI);
+
+      // 画：下一个的起始角就是上个的终止角
+      let last = 0;
+      angs.forEach((ang, index) => {
+        pie(last, last + ang, colors[index]);
+        last += ang;
+      });
+    }
+  </script>
+</body>
+
+</html>

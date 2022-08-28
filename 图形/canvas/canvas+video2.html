@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      background: white;
+    }
+
+    div {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    video {
+      display: none;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <input type="button" id="btn1" value="播放">
+    <input type="button" id="btn2" value="暂停">
+    <input type="button" id="btn3" value="停止"><br>
+    <canvas width="400" height="300">您的浏览器不支持canvas，请下载新版浏览器</canvas>
+    <video src="1.mp4" width="400" height="300"></video>
+  </div>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+      let oV = document.querySelector('video')
+      let oBtn1 = document.getElementById('btn1');
+      let oBtn2 = document.getElementById('btn2');
+      let oBtn3 = document.getElementById('btn3');
+
+      let b = false;
+      function next() {
+        requestAnimationFrame(function () {
+          ctx.drawImage(oV, 0, 32.5, 400, 225);
+          // 每画一帧就请求下一帧
+          if (b == false) {
+            next();
+          }
+        });
+      }
+      next();
+      oBtn1.onclick = function () {
+        oV.play();
+      };
+      oBtn2.onclick = function () {
+        oV.pause();
+      };
+      oBtn3.onclick = function () {
+        b = true;
+      };
+    };
+  </script>
+</body>
+
+</html>

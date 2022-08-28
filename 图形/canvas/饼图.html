@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .box {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: white;
+
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">
+    <canvas width="600" height="400">
+      您的浏览器不支持canvas，请下载新版浏览器
+    </canvas>
+  </div>
+
+
+  <script>
+    /*
+    给定数据：
+        类别： 苹果   香蕉   葡萄   荔枝
+        数量： 100    200    300   400
+        占比： 10%    20%    30%   40%
+    角度占比：  36    72    108    144
+      起始角：  0     36    108    216
+      终止角   36    108    216    360
+    */
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+      // 笨办法：都自己算了，不合适，应该用函数一个个画
+      ctx.arc(150, 150, 100, 0, 36 / 180 * Math.PI, false);
+      ctx.fillStyle = '#ab3f1b';
+      ctx.lineTo(150, 150);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(150, 150, 100, 36 / 180 * Math.PI, 108 / 180 * Math.PI, false);
+      ctx.fillStyle = '#38ab1b';
+      ctx.lineTo(150, 150);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(150, 150, 100, 108 / 180 * Math.PI, 216 / 180 * Math.PI, false);
+      ctx.fillStyle = '#ab6b1b';
+      ctx.lineTo(150, 150);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(150, 150, 100, 216 / 180 * Math.PI, 360 / 180 * Math.PI, false);
+      ctx.fillStyle = '#9fab1b';
+      ctx.lineTo(150, 150);
+      ctx.fill();
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="box">
+    <div class="chart"></div>
+    <div class="chart2"></div>
+  </div>
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+      let oChart2 = document.querySelector('.chart2');
+
+      let datas = [
+        {
+          name: '山东',
+          value: 300,
+          citys: [
+            { name: '临沂', value: 180 },
+            { name: '德州', value: 70 },
+            { name: '济南', value: 50 },
+          ]
+        },
+        {
+          name: '陕西',
+          value: 550,
+          citys: [
+            { name: '西安', value: 300 },
+            { name: '宝鸡', value: 150 },
+            { name: '汉中', value: 100 },
+          ]
+        },
+        {
+          name: '河南',
+          value: 430,
+          citys: [
+            { name: '郑州', value: 220 },
+            { name: '洛阳', value: 80 },
+            { name: '开封', value: 130 },
+          ]
+        }
+      ];
+
+      let myChart = echarts.init(oChart);
+
+      let option = {
+        title: {
+          text: '各省数据',
+        },
+        series: [
+          {
+            name: '各省数据',
+            type: 'pie',
+            radius: '50%',
+            data: datas.map(json => ({ name: json.name, value: json.value }))
+          }
+        ]
+      };
+      myChart.setOption(option);
+
+      let myChart2 = echarts.init(oChart2);
+
+      myChart.on('mouseover', function (ev) {
+        setCity(ev.name)
+      });
+
+      setCity(datas[0].name);
+      function setCity(name) {
+        let data = null;
+        datas.forEach(json => {
+          if (json.name == name) {
+            data = json;
+          }
+        });
+
+        let option = {
+          title: {
+            text: `${name}省数据`,
+          },
+          xAxis: [
+            {
+              type: 'category',
+              data: data.citys.map(city => city.name)
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: 'city',
+              type: 'bar',
+              radius: '50%',
+              data: data.citys.map(city => city.value)
+            }
+          ]
+        };
+        myChart2.setOption(option);
+      }
+    };
+  </script>
+</body>
+
+</html>

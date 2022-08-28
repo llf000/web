@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+
+    svg {
+      display: block;
+      margin: 50px auto;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="600" height="400">
+    <!-- d：描述要画的图形 -->
+    <!-- A rx ry x旋转 大弧标志 镜像标志 终点x 终点y -->
+    <!-- stroke-width给大点 -->
+    <path d="
+      M 300,100
+      A 200 200 0 0 1 500 300 " style=" stroke:purple; stroke-width:50; fill:none">
+    </path>
+  </svg>
+</body>
+
+</html>

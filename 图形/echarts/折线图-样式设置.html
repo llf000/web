@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+
+      // 初始化echarts实例
+      let myChart = echarts.init(oChart);
+      // 指定图表的配置项和数据
+      let option = {
+        title: {
+          text: '水果种类占比',
+          subtext: '设置样式'
+        },
+        legend: {
+          data: ['喜欢', '不喜欢'],
+          right: 0,
+          top: '50%',
+          orient: 'vertical'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: '喜欢',
+            type: 'line',
+            data: [100, 300, 200, 310, 500],
+            lineStyle: {
+              normal: {
+                color: 'purple',
+                width: 2,
+                type: 'dotted'
+              }
+            }
+          },
+          {
+            name: '不喜欢',
+            type: 'line',
+            data: [20, 50, 10, 40, 100],
+            // itemStyle: {
+            //   color: 'yellow',
+            //   borderColor: 'green',
+            //   borderWidth: 2,
+            //   borderType: 'ridge'
+            // }
+            label: {
+              show: true,
+              position: 'top',
+              textStyle: {
+                color: 'orange',
+                fontSize: 30
+              }
+            }
+          }
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表
+      myChart.setOption(option);
+    };
+
+  </script>
+</body>
+
+</html>

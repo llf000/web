@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      display: block;
+      /* width: 600px;
+      height: 400px; */
+      margin: 0 auto;
+      background: white;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas width="600" height="400">您的浏览器不支持canvas，请下载新版浏览器</canvas>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      let img = new Image();
+      img.src = 'sprit1.jpg';
+
+      img.onload = function () {
+        //第1帧     84      27
+        //第2帧     111     27
+        //第3帧     138
+        // 帧数、方向、速度
+        let frame = 0;
+        let dir = 'd';
+        let x = 100, y = 100;
+        const speed = 2;
+        // 键盘事件
+        document.onkeydown = function (ev) {
+          // 上下左右键的keyCode
+          let keys = { 37: 'l', 38: 'u', 39: 'r', 40: 'd' };
+          // 按了除上下左右键的其他键，方向不变
+          dir = keys[ev.keyCode] || dir;
+        };
+
+        setInterval(function () {
+          ctx.clearRect(0, 0, oC.width, oC.height);
+
+          let rows = { 'd': 0, 'l': 1, 'r': 2, 'u': 3 };
+
+          ctx.drawImage(
+            img,
+            84 + 27 * frame, 28 * rows[dir], 25, 28,
+            x, y, 25 * 2, 28 * 2
+          );
+
+          switch (dir) {
+            case 'l':
+              x -= speed;
+              break;
+            case 'r':
+              x += speed;
+              break;
+            case 'u':
+              y -= speed;
+              break;
+            case 'd':
+              y += speed;
+              break;
+          }
+
+          frame++;
+
+          if (frame == 3) {
+            frame = 0;
+          }
+        }, 100);
+      };
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+
+    svg {
+      display: block;
+      margin: 50px auto;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="600" height="400">
+    <line x1="100" y1="100" x2="300" y2="100" stroke="purple"></line>
+
+    <line x1="100" y1="150" x2="300" y2="150" stroke="red" stroke-width="10" onmouseover="this.style.stroke='blue';"
+      onmouseout="this.style.stroke='red';">
+    </line>
+
+    <line class="line3" x1="100" y1="200" x2="300" y2="200" stroke="green" stroke-width="10"></line>
+    <line class="line4" x1="100" y1="250" x2="300" y2="250" stroke="black" stroke-width="10"></line>
+    <line class="line5" x1="100" y1="300" x2="300" y2="300" stroke="blue" stroke-width="10"></line>
+  </svg>
+
+  <script>
+    window.onload = function () {
+      let line3 = document.querySelector('.line3');
+      let line4 = document.querySelector('.line4');
+      let line5 = document.querySelector('.line5');
+
+      line3.onmouseover = function () {
+        line3.style.stroke = "yellow";
+        // this.style.stroke = 'yellow';
+      };
+      line3.onmouseout = function () {
+        line3.style.stroke = "green";
+        // this.style.stroke = 'green';
+      };
+
+      line4.addEventListener('mouseover', function () {
+        this.style.stroke = 'purple';
+      }, false);
+      // line4.addEventListener('mouseout', () => {
+      // 箭头函数不可
+      line4.addEventListener('mouseout', function () {
+        this.setAttribute('y2', '250');
+      }, false);
+
+      line5.onclick = function () {
+        // this.setAttribute('x2', '400');
+        // this.setAttribute('y2', '200');
+        // x2生效，y2未生效
+        this.setAttribute('x2', '400', 'y2', '200');
+        alert(this.getAttribute('x1'));
+      };
+
+
+    }
+  </script>
+</body>
+
+</html>

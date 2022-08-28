@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+  <div class="chart2"></div>
+  <div class="chart3"></div>
+
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+      let oChart2 = document.querySelector('.chart2');
+      let oChart3 = document.querySelector('.chart3');
+
+      let myChart = echarts.init(oChart);
+
+      let option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'cross' }
+        },
+        title: {
+          text: '水果种类占比',
+          subtext: '基本折线图'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            type: 'line',
+            data: [100, 300, 200, 500, 400]
+          }
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表
+      myChart.setOption(option);
+
+
+      let myChart2 = echarts.init(oChart2);
+      let option2 = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'cross' }
+        },
+        title: {
+          text: '水果种类占比',
+          subtext: '笛卡尔坐标系中的折线图'
+        },
+        xAxis: {},
+        yAxis: {},
+        series: [
+          {
+            type: 'line',
+            data: [
+              [10, 130], [30, 200], [70, 70], [20, 50], [10, 30]
+            ]
+          }
+        ]
+      };
+      myChart2.setOption(option2);
+
+
+      let myChart3 = echarts.init(oChart3);
+      let option3 = {
+        title: {
+          text: '水果种类占比',
+          subtext: '有空数据的折线图'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            type: 'line',
+            data: [100, 300, '-', 500, 400]
+          }
+        ]
+      };
+      myChart3.setOption(option3);
+    };
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      display: block;
+      /* width: 600px;
+      height: 400px; */
+      margin: 0 auto;
+      background: white;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas width="600" height="400">您的浏览器不支持canvas，请下载新版浏览器</canvas>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      // 空心矩形
+      ctx.strokeRect(10, 10, 200, 150);
+
+      ctx.beginPath();
+
+      // 实心矩形
+      ctx.fillRect(10, 170, 200, 150);
+
+      // 文本
+      // 三个参数：text，x，y
+      ctx.beginPath();
+      ctx.strokeStyle = 'purple';
+      ctx.lineWidth = 1;
+      ctx.font = '36px arial';
+      ctx.strokeText('stroke text', 300, 50);
+
+      ctx.fillStyle = 'purple';
+      ctx.lineWidth = 1;
+      ctx.font = '50px fantasy';
+      ctx.fillText('fill text', 300, 200);
+    };
+  </script>
+</body>
+
+</html>

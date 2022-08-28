@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .box {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: white;
+
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="box">
+    <canvas width="600" height="400">
+      您的浏览器不支持canvas，请下载新版浏览器
+    </canvas>
+  </div>
+
+  <script>
+    /*
+  给定数据：
+      类别： 苹果   香蕉   葡萄   荔枝
+      数量： 100    200    300   400
+  */
+
+    // 角度转弧度
+    function d2a(n) {
+      return n * Math.PI / 180;
+    }
+
+    // 弧度转角度
+    function a2d(n) {
+      return n * 180 / Math.PI;
+    }
+
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      let cx = 300, cy = 200, r = 100;
+
+      function pie(startAng, endAng, color) {
+        ctx.beginPath();
+
+        // 画笔移动到圆心
+        ctx.moveTo(cx, cy);
+        // 三角函数算终止点的x、y
+        //x=cx+sin(ang)*r
+        let x = cx + Math.sin(d2a(startAng)) * r;
+        //y=cy-cos(ang)*r
+        let y = cy - Math.cos(d2a(startAng)) * r;
+
+        ctx.lineTo(x, y);
+
+        //ctx.arc(cx, cy, r, startAng, endAng, 逆时针)
+        ctx.arc(cx, cy, r, d2a(startAng - 90), d2a(endAng - 90), false);
+
+        ctx.closePath();
+
+        //ctx.stroke();
+        ctx.fillStyle = color;
+        ctx.fill();
+      }
+
+      // 数据
+      let data = [581, 273, 1750, 201];
+      let colors = ['#CF0', '#C0F', '#a6a6a6', '#0CF'];
+
+      // 总量
+      let sum = data.reduce((tmp, item, index) => tmp + item);
+
+      //数据占比->角度占比
+      let angs = data.map(item => 360 * item / sum);
+
+      // 画：下一个的起始角就是上个的终止角
+      let last = 0;
+
+      angs.forEach((ang, index) => {
+        pie(last, last + ang, colors[index]);
+
+        last += ang;
+      });
+    };
+  </script>
+</body>
+
+</html>

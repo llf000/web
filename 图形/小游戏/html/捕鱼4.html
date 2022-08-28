@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>捕鱼达人</title>
+  <link rel="stylesheet" href="../css/index.css" type="text/css">
+</head>
+
+<body>
+  <canvas class="canvas1" width="800" height="600"></canvas>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/drawRect.js"></script>
+  <script src="../js/sprite.js"></script>
+  <script src="../js/fish.js"></script>
+  <script src="../js/cannon.js"></script>
+  <script src="../js/button.js"></script>
+  <script src="../js/bullet.js"></script>
+  <script>
+    // 先把鱼、炮、炮台画出来
+    // 让鱼动起来
+    // 抽出组件，封装成类
+    //     动态生成鱼，保持屏幕最多有30条鱼
+    //     加减号按钮控制炮的类别
+    //     炮可以旋转
+    // 炮能开火，发射炮弹，开火最小间隔1秒，开火时炮有后坐力效果
+    window.onload = function () {
+      let oC = document.querySelector('.canvas1');
+      let ctx = oC.getContext('2d');
+      // 屏幕最多可以有30条鱼
+      let MAX_FISH = 30;
+      // 时间戳，最后一次开火的时间
+      let lastFire = 0;
+      // 是否开火了
+      let fired = false;
+
+      const W = oC.width, H = oC.height;
+      loadImgs(_resources, function (imgs) {
+        // 炮台
+        let tower = new Sprite(new DrawRect(_imgs.bottom, 0, 0, 756, 71));
+        tower.x = 400;
+        tower.y = H - 71 / 2 + 1;
+        // console.log(tower)
+
+        // 炮
+        let cannon = new Cannon(1);
+        cannon.x = 443;
+        cannon.y = 574;
+
+        // 炮弹
+        let bullets = [];
+
+        // 鱼
+        let fishs = [];
+
+        // 让炮跟着鼠标转
+        oC.onmousemove = function (ev) {
+          let a = ev.offsetX - cannon.x;
+          let b = ev.offsetY - cannon.y;
+          // 让炮的角度加90度：网页0度在x轴右，现在炮的0度在y轴
+          let ang = a2d(Math.atan2(b, a)) + 90;
+          cannon.rotation = ang;
+        };
+
+        // 加减号换炮按钮
+        let btnMinus = new Button(
+          new DrawRect(_imgs.bottom, 135, 75, 36, 28),
+          new DrawRect(_imgs.bottom, 91, 75, 36, 28)
+        );
+        btnMinus.x = 371;
+        btnMinus.y = 566;
+
+        let btnPlus = new Button(
+          new DrawRect(_imgs.bottom, 47, 75, 36, 28),
+          new DrawRect(_imgs.bottom, 3, 75, 36, 28)
+        )
+        btnPlus.x = 516;
+        btnPlus.y = 566;
+
+        btnMinus.onclick = function () {
+          if (cannon.type > 1) {
+            cannon.setType(cannon.type - 1);
+          } else {
+            cannon.setType(1);
+          }
+        }
+        btnPlus.onclick = function () {
+          if (cannon.type < 7) {
+            cannon.setType(cannon.type + 1);
+          } else {
+            cannon.setType(7);
+          }
+        }
+
+        let aBtn = [btnMinus, btnPlus]
+
+        oC.onmousedown = function (ev) {
+          aBtn.forEach(btn => {
+            btn.down(ev.offsetX, ev.offsetY);
+          });
+          // 炮弹发射间隔不能小于一秒
+          if (Date.now() - lastFire >= 1000) {
+            lastFire = Date.now();
+
+            let bullet = new Bullet(cannon.type, cannon.x, cannon.y, cannon.rotation);
+            bullets.push(bullet);
+
+            fired = true;
+          }
+        };
+
+        oC.onmouseup = function (ev) {
+          aBtn.forEach(btn => {
+            btn.up(ev.offsetX, ev.offsetY);
+          });
+        };
+
+        function animate() {
+          requestAnimationFrame(animate);
+          // 生成鱼
+          // 概率跟鱼数量都满足，才能生成新鱼
+          if (rnd(1, 20) == 1 && fishs.length < MAX_FISH) {
+            let fish = new Fish(rnd(1, 5));
+            // 鱼从左边生成
+            if (rnd(0, 2) == 0) {
+              fish.x = -100;
+              fish.rotation = 90;
+            } else {
+              // 鱼从右边生成
+              fish.x = W + 100;
+              fish.rotation = -90;
+            }
+
+            fish.y = rnd(0, H - 100);
+            fishs.push(fish);
+          }
+
+          ctx.clearRect(0, 0, oC.width, oC.height);
+
+          tower.draw(ctx);
+
+          bullets.forEach(bullet => {
+            bullet.move();
+            bullet.draw(ctx);
+          })
+          // 如果开火了，炮换一帧，实现后坐力效果
+          if (fired) {
+            ret = cannon.nextFrame();
+            // 开一次火，炮的动画实现一次就好
+            if (ret == true) {
+              fired = false;
+            }
+          }
+
+          cannon.draw(ctx);
+          btnMinus.draw(ctx);
+          btnPlus.draw(ctx);
+
+          fishs.forEach(fish => {
+            fish.move();
+            fish.nextFrame();
+            fish.draw(ctx);
+          });
+        }
+        requestAnimationFrame(animate);
+      });
+    };
+  </script>
+</body>
+
+</html>

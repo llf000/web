@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: white;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas class="canvas1" width="700" height="400">
+    您的浏览器不支持canvas，请下载新版浏览器
+  </canvas>
+
+  <script>
+    // 用函数将角度转弧度
+    function d2a(n) {
+      return n * Math.PI / 180;
+    }
+    window.onload = function () {
+      let oC = document.querySelector('.canvas1');
+      let ctx = oC.getContext('2d');
+
+      let rotate = 0;
+      ctx.strokeRect(100, 100, 200, 100);
+
+      // 定时器，每100毫秒调用一次函数
+      setInterval(function () {
+
+        // 为了方便看旋转点，再画个
+        ctx.strokeRect(100, 100, 200, 100);
+        rotate++;
+        if (rotate < 90) {
+          ctx.save();
+
+          ctx.translate(200, 150);
+          ctx.rotate(d2a(rotate));
+          ctx.strokeRect(-100, -50, 200, 100);
+
+          ctx.restore();
+        } else {
+          clearInterval(timer);
+        }
+      }, 100);
+
+    };
+  </script>
+</body>
+
+</html>

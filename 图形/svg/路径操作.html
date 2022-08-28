@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+
+    svg {
+      display: block;
+      margin: 50px auto;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="600" height="400">
+    <!-- d：描述要画的图形 -->
+    <path d="M 50,50 L 150,50 L 150,150 L 50,150 Z" style="stroke:blue; fill:rgba(0,0,0,0)"></path>
+
+    <path d="
+    M 300 50
+    L 400 150
+    L 200 150
+    Z
+    " style="stroke:purple; stroke-width:10; fill:rgb(227, 138, 227);">
+    </path>
+    <!-- stroke没有radius -->
+    <!-- <path d="M 50,200 L 300,200 300,300 50,300 Z"
+      style="stroke:chocolate; stroke-width:10; stroke-radius:10; fill:none;">
+    </path> -->
+  </svg>
+</body>
+
+</html>

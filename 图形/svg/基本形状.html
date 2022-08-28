@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+
+    svg {
+      display: block;
+      margin: 50px auto;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="600" height="400">
+    <!-- 线 -->
+    <line x1="100" y1="100" x2="300" y2="100" stroke="purple" stroke-width="5"></line>
+    <!-- 矩形 -->
+    <!-- 填充fill是none时，没有填充，不能加事件；透明色填充可以加事件 -->
+    <rect x="100" y="150" width="100" height="100" stroke="blue" stroke-width="10" rx="5" ry="5"></rect>
+    <rect x="250" y="150" width="100" height="100" stroke="blue" stroke-width="10" fill="none" rx="5" ry="5"
+      onclick="alert('click')"></rect>
+    <rect x="400" y="150" width="100" height="100" stroke="blue" stroke-width="10" fill="rgba(0,0,0,0)" rx="5" ry="5"
+      onclick="alert('click')">
+    </rect>
+
+    <!-- 圆 -->
+    <circle cx="150" cy="350" r="50" style="stroke:red; fill:bisque;"></circle>
+    <!-- 椭圆 -->
+    <ellipse cx="350" cy="350" rx="100" ry="50" style="stroke:green; fill:rgba(0,0,0,0);"></ellipse>
+  </svg>
+</body>
+
+</html>

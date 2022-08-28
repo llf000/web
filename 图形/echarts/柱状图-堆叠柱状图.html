@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+
+      let myChart = echarts.init(oChart);
+
+      let option = {
+        title: {
+          text: '堆叠柱状图',
+          subtext: '在series里设置相同stack值'
+        },
+        xAxis: {
+          data: ['A', 'B', 'C', 'D', 'E']
+        },
+        yAxis: {},
+        series: [
+          {
+            type: 'bar',
+            data: [20, 40, 10, 60, 50],
+            stack: 'a'
+          },
+          {
+            type: 'bar',
+            data: [8, 10, 20, 11, 2],
+            stack: 'a'
+          }
+        ]
+      };
+      myChart.setOption(option);
+    };
+
+  </script>
+</body>
+
+</html>

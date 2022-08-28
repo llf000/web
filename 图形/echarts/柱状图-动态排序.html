@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+
+      let myChart = echarts.init(oChart);
+
+      let data = [];
+      for (let i = 0; i < 5; ++i) {
+        data.push(Math.round(Math.random() * 200));
+      }
+
+      let option = {
+        title: {
+          text: '动态排序柱状图',
+          subtext: ''
+        },
+        xAxis: {
+          // max: 'dataMax'：用数据的最大值作为X轴最大值，视觉效果更好
+          max: 'dataMax'
+        },
+        yAxis: {
+          type: 'category',
+          data: ['A', 'B', 'C', 'D', 'E'],
+          // Y轴从下往上是从小到大排列的
+          inverse: true,
+          // 第一次柱条排序动画的时长
+          animationDuration: 300,
+          // 第一次后柱条排序动画的时长
+          animationDurationUpdate: 300,
+          // 显示前n名：max:n-1，不设置就是显示所有 
+          // max:2：显示前3名
+          max: 2
+        },
+        series: [
+          {
+            // 开启动态排序效果
+            realtimeSort: true,
+            name: 'X',
+            type: 'bar',
+            data: data,
+            label: {
+
+              show: true,
+              position: 'right',
+              // 显示实时标签
+              valueAnimation: true
+            }
+          }
+        ],
+        legend: {
+          show: true
+        },
+        animationDuration: 3000,
+        // 每次更新动画时长，与setInterval设置的相同
+        animationDurationUpdate: 3000,
+        animationEasing: 'linear',
+        animationEasingUpdate: 'linear'
+      };
+
+      function update() {
+        let data = option.series[0].data;
+        for (let i = 0; i < data.length; ++i) {
+          if (Math.random() > 0.9) {
+            data[i] += Math.round(Math.random() * 2000);
+          } else {
+            data[i] += Math.round(Math.random() * 200);
+          }
+        }
+        myChart.setOption(option);
+      }
+      let timer = 0;
+      timer = setInterval(function () {
+        update();
+      }, 3000);
+      if (data[i].data == 1000) {
+        clearInterval(timer);
+      }
+    };
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+
+
+      let myChart = echarts.init(oChart);
+
+      let option = {
+        title: {
+          text: '水果种类占比',
+          subtext: '阶梯'
+        },
+        legend: {
+          data: ['已售', '库存', '进货'],
+          right: 0,
+          top: '50%',
+          orient: 'vertical'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: '已售',
+            type: 'line',
+            data: [120, 132, 101, 134, 90],
+            step: 'start'
+          },
+          {
+            name: '库存',
+            type: 'line',
+            data: [220, 282, 201, 234, 290],
+            step: 'middle'
+          },
+          {
+            name: '进货',
+            type: 'line',
+            data: [450, 432, 401, 454, 590],
+            step: 'end'
+          }
+        ]
+      };
+
+      myChart.setOption(option);
+    };
+
+  </script>
+</body>
+
+</html>

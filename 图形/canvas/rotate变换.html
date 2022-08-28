@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: white;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas width="600" height="400">
+    您的浏览器不支持canvas，请下载新版浏览器
+  </canvas>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      // save保存默认的画布状态，restore还原到上次保存的默认状态
+      // 做变换前先save，变换结束后restore，不会影响其他canvas操作
+      ctx.save();
+      // 画布的原点一直是左上角，所以需要translate
+      // canvas和css3方法是从后往前生效的，所以其实是先rotate了再translate
+      ctx.translate(150, 100);
+      // 顺时针旋转30°
+      ctx.rotate(90 / 180 * Math.PI);
+      // ctx.strokeRect(50, 50, 200, 100);
+      ctx.strokeRect(-100, -50, 200, 100);
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(150, 100);
+      // 所有的变换都是叠加的，后面不会覆盖前面的
+      // 蓝色矩形并没有转换40°，而是直接转了70°
+      ctx.rotate(30 / 180 * Math.PI);
+      ctx.rotate(40 / 180 * Math.PI);
+      ctx.strokeStyle = 'blue';
+      ctx.strokeRect(-100, -50, 200, 100);
+      ctx.restore();
+
+      ctx.strokeStyle = 'red';
+      ctx.strokeRect(50, 50, 200, 100);
+    };
+  </script>
+</body>
+
+</html>

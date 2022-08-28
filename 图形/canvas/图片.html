@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    canvas {
+      display: block;
+      /* width: 600px;
+      height: 400px; */
+      margin: 0 auto;
+      background: white;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas width="600" height="400">您的浏览器不支持canvas，请下载新版浏览器</canvas>
+
+  <script>
+    window.onload = function () {
+      let oC = document.querySelector('canvas');
+      let ctx = oC.getContext('2d');
+
+      let img = new Image();
+      img.src = 'sprite.png';
+
+      // 图片的加载需要时间，等加载完才能画
+      img.onload = function () {
+        // 简易版
+        //drawImage(img, x, y)
+        ctx.drawImage(img, 0, 0);
+
+        // 完整版img、sx、sy、sw、sh、dx、dy、dw、dh
+        // s-source(源头上抠东西)
+        // d-destination(目标 画到canvas哪里去)
+        ctx.drawImage(img,
+          0, 0, 75, 75,
+          400, 100, 75, 75);
+      };
+    };
+  </script>
+</body>
+
+</html>

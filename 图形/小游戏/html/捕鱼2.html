@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>捕鱼达人</title>
+  <link rel="stylesheet" href="../css/index.css" type="text/css">
+</head>
+
+<body>
+  <canvas class="canvas1" width="800" height="600"></canvas>
+
+  <script src="../js/common.js"></script>
+  <script>
+    // 先把鱼、炮、炮台画出来
+    // 让鱼动起来
+    class Sprite {
+      constructor(img, width, height, x = 0, y = 0, rotation = 0) {
+        this.img = img;
+        this.width = width;
+        this.height = height;
+        this.sx = 0;
+        this.sy = 0;
+        this.x = x;
+        this.y = y;
+        this.rotation = rotation;
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(d2a(this.rotation));
+        ctx.drawImage(
+          this.img,
+          this.sx, this.sy, this.width, this.height,
+          -this.width / 2, -this.height / 2, this.width, this.height
+        );
+        ctx.restore();
+      }
+    }
+
+    class Fish extends Sprite {
+      // 用type区分不同鱼
+      constructor(type, x = 0, y = 0, rotation = 0) {
+        const SIZE = [
+          // 第0个鱼空出来
+          null,
+          { w: 55, h: 37 },
+          { w: 78, h: 64 },
+          { w: 72, h: 56 },
+          { w: 77, h: 59 },
+          { w: 107, h: 122 }
+        ];
+        // 调用父类构造函数
+        super(_imgs[`fish${type}`], SIZE[type].w, SIZE[type].h, x, y, rotation);
+
+        // 子类相关的
+        this.type = type;
+        // 到哪一帧了
+        this.curFrame = 0;
+        // 默认最大帧数 4，因为鱼的形态只有4种
+        this.MAX_FRAME = 4;
+      }
+
+      nextFrame() {
+        this.curFrame++;
+        if (this.curFrame >= this.MAX_FRAME) {
+          this.curFrame = 0;
+        }
+        // 到哪一帧就换哪一帧的小鱼
+        this.sy = this.height * this.curFrame;
+      }
+    }
+
+    class Cannon extends Sprite {
+      constructor(type, x = 0, y = 0, rotation = 0) {
+        if (type > 7 || type < 1) {
+          throw new Error('unknow cannon type');
+        }
+        const SIZE = [
+          null,
+          { w: 74, h: 74 },
+          { w: 74, h: 76 },
+          { w: 74, h: 76 },
+          { w: 74, h: 83 },
+          { w: 74, h: 85 },
+          { w: 74, h: 90 },
+          { w: 74, h: 94 },
+        ];
+
+        super(_imgs[`cannon${type}`], SIZE[type].w, SIZE[type].h, x, y, rotation);
+
+        this.type = type;
+      }
+    }
+
+    window.onload = function () {
+      let oC = document.querySelector('.canvas1');
+      let ctx = oC.getContext('2d');
+
+      const W = oC.width, H = oC.height;
+      loadImgs({
+        fish1: '../img/fish1.png',
+        cannon1: '../img/cannon1.png',
+        bottom: '../img/bottom.png'
+      }, function (imgs) {
+
+        let tower = new Sprite(_imgs.bottom, 756, 71);
+        tower.x = 400;
+        tower.y = H - 71 / 2 + 1;
+        console.log(tower)
+        let cannon = new Cannon(1);
+        cannon.x = 443;
+        cannon.y = 574;
+
+        let fish1 = new Fish(1);
+        // 在(200,150)处画小鱼
+        fish1.x = 200;
+        fish1.y = 150;
+
+        let tick = 0;
+        // 定时器做法 不太好
+        /*
+        setInterval(function () {
+          ctx.clearRect(0, 0, oC.width, oC.height);
+
+          fish1.x++;
+
+          fish1.draw(ctx);
+
+          tick++;
+          if (tick == 10) {
+            tick = 0;
+            fish1.nextFrame();
+          }
+        }, 16)
+        */
+        function animate() {
+          requestAnimationFrame(animate);
+          ctx.clearRect(0, 0, oC.width, oC.height);
+
+          tower.draw(ctx);
+          cannon.draw(ctx);
+
+          fish1.x++;
+          fish1.draw(ctx);
+          tick++;
+          if (tick == 10) {
+            tick = 0;
+            fish1.nextFrame();
+          }
+        }
+        requestAnimationFrame(animate);
+      });
+
+
+    };
+  </script>
+</body>
+
+</html>

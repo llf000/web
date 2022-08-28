@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="chart.css" type="text/css">
+</head>
+
+<body>
+  <div class="chart"></div>
+  <div class="chart2"></div>
+  <div class="chart3"></div>
+
+
+  <script src="echarts.js"></script>
+  <script>
+    window.onload = function () {
+      let oChart = document.querySelector('.chart');
+      let oChart2 = document.querySelector('.chart2');
+
+      // 初始化echarts实例
+      let myChart = echarts.init(oChart);
+      // 指定图表的配置项和数据
+      let option = {
+        title: {
+          text: '水果种类占比',
+          subtext: '基本柱状图'
+        },
+        xAxis: [
+          // 横坐标：类目型，需指定对应值
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          // 纵坐标：数值型，可根据series中的data，自动生成对应坐标范围
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            type: 'bar',
+            data: [100, 200, 300, 400, 500]
+          }
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表
+      myChart.setOption(option);
+
+      let myChart2 = echarts.init(oChart2);
+      let option2 = {
+        title: {
+          text: '水果种类占比',
+          subtext: '多系列柱状图'
+        },
+        legend: {
+          data: ['喜欢', '不喜欢'],
+          right: 0,
+          top: '50%',
+          orient: 'vertical'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['苹果', '香蕉', '葡萄', '荔枝', '桃子']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        // 可以在series中多加几项，构建多系列柱状图
+        series: [
+          {
+            name: '喜欢',
+            type: 'bar',
+            data: [100, 200, 300, 400, 500]
+          },
+          {
+            name: '不喜欢',
+            type: 'bar',
+            data: [20, 50, 10, 40, 100]
+          }
+        ]
+      };
+      myChart2.setOption(option2);
+    };
+
+  </script>
+</body>
+
+</html>

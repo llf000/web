@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background: #ccc;
+    }
+
+    div {
+      width: 600px;
+      margin: 50px auto;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <input type="button" value="画线" id="btn">
+    <svg width="600" height="400"></svg>
+  </div>
+
+
+  <script>
+    window.onload = function () {
+      let oSvg = document.querySelector('svg');
+      let oBtn = document.querySelector('#btn');
+
+      oBtn.onclick = function () {
+        // createEllement:创建一个元素而不指定命名空间 URI
+        // let line = document.createElement('div');
+        // 加上html的URI命名空间就是：
+        // let oDiv=document.createElementNS('http://www.w3.org/1999/html', 'div');
+
+        // createElementNS:创建一个具有指定的命名空间 URI 和限定名称的元素
+        // 创建svg的line元素
+        let sLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        sLine.setAttribute('x1', 100);
+        sLine.setAttribute('y1', 100);
+        sLine.setAttribute('x2', 400);
+        sLine.setAttribute('y2', 100);
+        sLine.style.stroke = 'purple';
+        sLine.style.strokeWidth = '5';
+        oSvg.appendChild(sLine);
+
+        let sLine2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        // 会提示setAttribute需要两个参数，但现在只有一个：因为setAttribute不能传JSON
+        sLine2.setAttribute({ x1: 100, y1: 100, x2: 400, y2: 300 });
+        sLine2.style.stroke = 'red';
+        sLine2.style.strokeWidth = '10';
+        oSvg.appendChild(sLine2);
+      };
+    };
+  </script>
+</body>
+
+</html>
